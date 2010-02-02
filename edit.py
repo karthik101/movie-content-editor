@@ -40,7 +40,7 @@ for line in f:
 # -------- Load and start movie ----------------
 instance = vlc.Instance()
 #instance.add_intf(None)
-media = instance.media_new(path + "Kung Fu Panda.m4v")
+media = instance.media_new(path + "Wildlife.wmv")
 player = instance.media_player_new()
 player.set_media(media)
 player.play()

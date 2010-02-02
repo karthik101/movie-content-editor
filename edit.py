@@ -24,7 +24,7 @@ def sendDebug(msg, newline=1):
         print msg
 
 # TODO: remove hard-coded path  
-path = "C:\Users\YourName\Documents\Movie Editor\"
+path = ""
 
 # ------ pre-process sections to mute -----------
 f = open(path + "mute.txt")
@@ -54,14 +54,14 @@ time.sleep(1)
 
 # turn on subtitles
 #player.video_set_spu(1)
-player.video_set_subtitle_file(path + "panda_edit.srt');
+player.video_set_subtitle_file(path + "panda_edit.srt")
 
 # (temporary) skipping over intro to get to good stuff
 player.set_time(35000)
 
 startTime = time.time()*1000 - player.get_time()
 
-event = vlc.EventType.MediaPlayerTimeChanged;
+event = vlc.EventType.MediaPlayerTimeChanged
 
 eventManage = player.event_manager()
 #eventManage.event_attach(event,func,None)

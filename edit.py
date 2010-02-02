@@ -4,13 +4,24 @@ import ctypes
 import sys
 import threading
 
+
+DEBUG = True
+
 # TODO: not using any of these callback methods right now
 callbackmethod=ctypes.CFUNCTYPE(None, vlc.Event, ctypes.c_void_p) 
 
 @callbackmethod
 def func(event,data):
-    print "hi"
+    sendDebug("hi")
     sys.exit(0)
+
+
+def sendDebug(msg, newline=1):
+    global DEBUG
+    if DEBUG:
+        if newline:
+            print ' '
+        print msg
 
 # TODO: remove hard-coded path  
 path = "C:\Users\YourName\Documents\Movie Editor\"
@@ -59,16 +70,16 @@ def mute(instance,tWait):
     instance.audio_set_mute(1)
     time.sleep(tWait)
     instance.audio_set_mute(0)
-    print "muted"
+    sendDebug("muted")
     return
 
 def skip(player,tSkip):
     player.set_time(player.get_time() + long(tSkip*1000))
-    print "skipped"
+    sendDebug("skipped")
     return
 
 def stop(player):
-    print "done"
+    sendDebug("done")
     player.stop()
     sys.exit(0)
 

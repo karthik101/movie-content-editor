@@ -39,7 +39,6 @@ media = instance.media_new(path + "\Kung Fu Panda.m4v")
 player = instance.media_player_new()
 player.set_media(media)
 player.play()
-#mc = vlc.MediaControl(instance)
 # -------------------------------------------------
 
 # I use this for testing with Panda

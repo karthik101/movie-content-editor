@@ -1,7 +1,7 @@
 import vlc
 import sys
 import time
-import threading
+from threading import Thread
 
 DEBUG = True
 
@@ -12,15 +12,19 @@ def sendDebug(msg, newline=1):
             print ' '
         print msg
 
+# For now I need to define the path, I commented out so it should work for you guys
+#path = 'C:\Users\Kimberly\Desktop\Andrew\Movie Editor\movie-editor'
+path = '.'
+
 # ------ pre-process sections to mute -----------
 try:
-    f = open('mute.txt','r')
+    f = open(path + '\mute.txt','r')
     i = 0
-    start = []
+    begin = []
     finish = []
     for line in f:
         separate = line.strip().split()
-        start.append(float(separate[0])*1000)
+        begin.append(float(separate[0])*1000)
         finish.append(float(separate[1])*1000)
     f.close()
 except IOError:
@@ -30,8 +34,8 @@ except IOError:
 
 # -------- Load and start movie ----------------
 instance = vlc.Instance()
-instance.add_intf(None)
-media = instance.media_new("Kung Fu Panda.m4v")
+#instance.add_intf(None)
+media = instance.media_new(path + "\Kung Fu Panda.m4v")
 player = instance.media_player_new()
 player.set_media(media)
 player.play()
@@ -42,17 +46,45 @@ player.play()
 player.set_time(35000)
 
 # turn on subtitles
-player.video_set_subtitle_file("panda_edit.srt")
+player.video_set_subtitle_file(path + "\panda_edit.srt")
 
-# ------ defined functions for editing ----------
-def mute(instance,tWait):
+
+# ------------- subclass off of Thread ---------------
+class editThread (Thread):
+
+    # override default behavior
+    def __init__ (self,player,begin,finish):
+        Thread.__init__ ( self )
+        self.player = player
+        self.begin = begin
+        self.finish = finish
+        
+    # right now this only handles mute and will need to include a
+    # check in case it is interrupted by another thread.  
+    def run ( self ):
+        for i in range (0,len(begin)):
+            tAction = (finish[i] - begin[i])/1000
+            
+            # sleep until time for next action
+            tSleep = (begin[i] - player.get_time())/1000
+            if (tSleep > 30): # don't know that 30 sec is the right number per se
+                time.sleep(tSleep-30)
+                tSleep = (begin[i] - player.get_time())/1000
+            time.sleep(tSleep)
+            
+            mute(tAction)
+        return
+# ------------------------------------------------------
+
+# ------- methods -------------------------
+def mute (tMute):
     instance.audio_set_mute(1)
-    time.sleep(tWait)
+    time.sleep(tMute)
     instance.audio_set_mute(0)
-    sendDebug("muted")
     return
+    
 
-def skip(player,tSkip):
+def skip(tSkip):
     player.set_time(player.get_time() + long(tSkip*1000))
     sendDebug("skipped")
     return
@@ -62,13 +94,8 @@ def stop(player):
     sys.exit()
 # --------------------------------------------
 
-# ---- initiate threads for the edit commands -----
-for i in range (0,len(start)):
-    tWait = (finish[i]-start[i])/1000
-    arg1 = (instance,tWait)
-    t1 = threading.Timer((start[i]-player.get_time())/1000,mute,arg1)
-    t1.start()
-# -----------------------------------------------
+thread1 = editThread(player, begin, finish)
+thread1.start()
 
 # this is temporary just so player doesn't go on for long time
 time.sleep(80-player.get_time()/1000)

@@ -50,13 +50,6 @@ player.video_set_subtitle_file(path + "\panda_edit.srt")
 
 # ------------- subclass off of Thread ---------------
 class editThread (Thread):
-
-    # override default behavior
-    def __init__ (self,player,begin,finish):
-        Thread.__init__ ( self )
-        self.player = player
-        self.begin = begin
-        self.finish = finish
         
     # right now this only handles mute and will need to include a
     # check in case it is interrupted by another thread.  
@@ -93,7 +86,7 @@ def stop(player):
     sys.exit()
 # --------------------------------------------
 
-thread1 = editThread(player, begin, finish)
+thread1 = editThread()
 thread1.start()
 
 # this is temporary just so player doesn't go on for long time

@@ -7,7 +7,7 @@ import sys
 
 def readSrt(path,subtitles,filterList):
     """
-    Edits a subtitle *.srt file
+    Edits a subtitle *.srt file.
     
     @param - path where file is located (I need to figure out how to avoid this with Pydev
     @param subtitles - the *.srt file

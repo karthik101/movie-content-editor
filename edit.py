@@ -15,8 +15,8 @@ def sendDebug(msg, newline=1):
         print msg
 
 # For now I need to define the path, I commented out so it should work for you guys
-path = 'C:\Users\Kimberly\Desktop\Andrew\Movie Editor\\'
-#path = ''
+#path = 'C:\Users\Kimberly\Desktop\Andrew\Movie Editor\\'
+path = ''
 
 
 badwordsFile = "badwords.txt"

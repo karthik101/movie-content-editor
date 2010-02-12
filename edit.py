@@ -2,6 +2,8 @@ import vlc
 import sys
 import time
 from threading import Thread
+from subtitle import readSrt
+from mergeCommands import merge
 
 DEBUG = True
 
@@ -13,41 +15,48 @@ def sendDebug(msg, newline=1):
         print msg
 
 # For now I need to define the path, I commented out so it should work for you guys
-#path = 'C:\Users\Kimberly\Desktop\Andrew\Movie Editor\movie-editor\\'
-path = ''
+path = 'C:\Users\Kimberly\Desktop\Andrew\Movie Editor\\'
+#path = ''
 
-# ------ pre-process sections to mute -----------
-try:
-    f = open(path + 'mute.txt','r')
-    i = 0
-    aType = []
-    begin = []
-    finish = []
-    for line in f:
-        separate = line.strip().split()
-        aType.append(int(separate[0]))
-        begin.append(float(separate[1])*1000)
-        finish.append(float(separate[2])*1000)
-    f.close()
-except IOError:
-    print("File not found")
-    sys.exit()
-# ------------------------------------------------
+
+badwordsFile = "badwords.txt"
+movieFile = "Kung Fu Panda.m4v"
+subtitleFile = "panda.srt"
+customFile = "panda_custom.txt"
+
+# ------  create edited subtitle file ------
+subtitleEdit = readSrt(path,subtitleFile,badwordsFile)
+# --------------------------------------------
+
+# ------- create list of commands ----------
+commands = merge(path,customFile)
+# -----------------------------------------
+
+# ------ separate commands for convenience -----
+cType = []
+sTime = []
+fTime = []
+for item in commands:
+    cType.append(int(item[0])) # command type
+    sTime.append(float(item[1])*1000) # command start time in ms
+    fTime.append(float(item[2])*1000) # command finish time in ms
+# -------------------------------------------
+
 
 # -------- Load and start movie ----------------
 instance = vlc.Instance()
 instance.add_intf("qt")
-media = instance.media_new(path + "Kung Fu Panda.m4v")
+media = instance.media_new(path + movieFile)
 player = instance.media_player_new()
 player.set_media(media)
 player.play()
 # -------------------------------------------------
 
 # I use this for testing with Panda
-player.set_time(35000)
+player.set_time(33000)
 
 # turn on subtitles
-player.video_set_subtitle_file(path + "panda_edit.srt")
+player.video_set_subtitle_file(path + subtitleEdit)
 
 
 # ------------- subclass off of Thread ---------------
@@ -56,22 +65,22 @@ class editThread (Thread):
     # right now this only handles mute and will need to include a
     # check in case it is interrupted by another thread.  
     def run ( self ):
-        for i in range (0,len(begin)):
+        for i in range (0,len(sTime)):
             
             # sleep until time for next action
-            tSleep = (begin[i] - player.get_time())/1000
+            tSleep = (sTime[i] - player.get_time())/1000
             if (tSleep > 30):
                 time.sleep(tSleep-30)
-                tSleep = (begin[i] - player.get_time())/1000
+                tSleep = (sTime[i] - player.get_time())/1000
             time.sleep(tSleep)
             
             # perform action
-            if (aType[i] == 0):
+            if (cType[i] == 0):
                 onMute()
-            elif (aType[i] == 1):
+            elif (cType[i] == 1):
                 offMute()
-            elif (aType[i] == 2):
-                skip((finish[i] - begin[i])/1000)
+            elif (cType[i] == 2):
+                skip(fTime[i] - sTime[i])
                 
         return
 # ------------------------------------------------------
@@ -86,7 +95,7 @@ def offMute ():
     return
 
 def skip(tSkip):
-    player.set_time(player.get_time() + long(tSkip*1000))
+    player.set_time(player.get_time() + long(tSkip))
     return
 
 def stop(player):
@@ -97,6 +106,7 @@ def stop(player):
 thread1 = editThread()
 thread1.start()
 
+print player.get_time()
 # this is temporary just so player doesn't go on for long time
 time.sleep(80-player.get_time()/1000)
 stop(player)

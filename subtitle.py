@@ -23,8 +23,8 @@ def readSrt(path,subtitles,filterList):
     name = subtitles.split('.')
     editFile = name[0] + "_edit.srt"
     try:
-        fin = open(path + subtitles, 'r')
-        fbad = open(path + filterList,'r')
+        fin = open(path + subtitles, 'rU')
+        fbad = open(path + filterList,'rU')
         fout = open(path + 'mute.txt','w')
         fedit = open(path + editFile,'w')
     except IOError:

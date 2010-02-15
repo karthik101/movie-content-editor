@@ -1,9 +1,11 @@
+#! /usr/bin/python
 import vlc
 import sys
 import time
 from threading import Thread
 from subtitle import readSrt
 from mergeCommands import merge
+from PyQt4 import QtGui
 
 DEBUG = True
 
@@ -42,13 +44,30 @@ for item in commands:
     fTime.append(float(item[2])*1000) # command finish time in ms
 # -------------------------------------------
 
+app = QtGui.QApplication(sys.argv)
+
 
 # -------- Load and start movie ----------------
-instance = vlc.Instance()
-instance.add_intf("qt")
+"""Set up the system independent movie interface. For windows, we can just use the 
+default Qt interface. For mac, we have to use our custom built interface. Nothing is
+currently implemented for Linux"""
+
+if sys.platform == 'darwin':
+    d='/Applications/VLC.app/Contents/MacOS'
+    vlc_args = ("-I dummy --verbose=1 --ignore-config --plugin-path=" + d + "/modules --vout=minimal_macosx --opengl-provider=minimal_macosx")
+else:
+    vlc_args = ("-I qt")
+    
+instance = vlc.Instance(vlc_args)
+#instance.add_intf("qt")
 media = instance.media_new(path + movieFile)
 player = instance.media_player_new()
 player.set_media(media)
+
+if sys.platform == 'darwin':
+    from VLCMacVideo import MacPlayer
+    mplayer = MacPlayer(player)
+
 player.play()
 # -------------------------------------------------
 
@@ -99,7 +118,8 @@ def skip(tSkip):
     return
 
 def stop(player):
-    player.stop()
+    if sys.platform != 'darwin':
+        player.stop()
     sys.exit()
 # --------------------------------------------
 
@@ -108,7 +128,9 @@ thread1.start()
 
 print player.get_time()
 # this is temporary just so player doesn't go on for long time
-time.sleep(80-player.get_time()/1000)
+#time.sleep((80-player.get_time()/1000))
+app.exec_()
+#time.sleep(55)
 stop(player)
 
 

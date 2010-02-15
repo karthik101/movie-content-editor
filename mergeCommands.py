@@ -18,8 +18,8 @@ def merge(path,custom):
     
     # ------ open files --------
     try:
-        fMute = open(path + "mute.txt", 'r')
-        fCustom = open(path + custom,'r')
+        fMute = open(path + "mute.txt", 'rU')
+        fCustom = open(path + custom,'rU')
     except IOError:
         print("File not found") #TODO: add a more descriptive error
         sys.exit()

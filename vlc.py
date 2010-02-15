@@ -37,7 +37,7 @@ import logging
 import ctypes
 import sys
 
-build_date="Mon Nov  9 11:56:56 2009"
+build_date="Thu Jan 28 12:00:04 2010"
 
 # Used for win32 and MacOS X
 detected_plugin_path=None
@@ -69,7 +69,8 @@ elif sys.platform == 'win32':
             p='c:\\Program Files\\VideoLAN\\VLC\\libvlc.dll'
             if os.path.exists(p):
                 detected_plugin_path=os.path.dirname(p)
-        os.chdir(detected_plugin_path)
+        if detected_plugin_path is not None:
+            os.chdir(detected_plugin_path)
         # If chdir failed, this will not work and raise an exception
         path='libvlc.dll'
     else:
@@ -485,6 +486,45 @@ else:
         def clear(self):
             libvlc_exception_clear(self)
 
+class MediaStats(ctypes.Structure):
+    _fields_= [
+                ('read_bytes',          ctypes.c_int  ),
+                ('input_bitrate',       ctypes.c_float),
+                ('demux_read_bytes',    ctypes.c_int  ),
+                ('demux_bitrate',       ctypes.c_float),
+                ('demux_corrupted',     ctypes.c_int  ),
+                ('demux_discontinuity', ctypes.c_int  ),
+                ('decoded_video',       ctypes.c_int  ),
+                ('decoded_audio',       ctypes.c_int  ),
+                ('displayed_pictures',  ctypes.c_int  ),
+                ('lost_pictures',       ctypes.c_int  ),
+                ('played_abuffers',     ctypes.c_int  ),
+                ('lost_abuffers',       ctypes.c_int  ),
+                ('sent_packets',        ctypes.c_int  ),
+                ('sent_bytes',          ctypes.c_int  ),
+                ('send_bitrate',        ctypes.c_float),
+                ]
+
+    def __str__(self):
+        return "MediaStats\n%s" % "\n".join( "%s:\t%s" % (n, getattr(self, n)) for n in self._fields_ )
+
+if 'EsType' in dir():
+    class MediaES(ctypes.Structure):
+        _fields_= [
+            ('codec'   , ctypes.c_uint32),
+            ('id'      , ctypes.c_int),
+            ('type'    , EsType),
+            ('profile' , ctypes.c_int),
+            ('level'   , ctypes.c_int),
+            ('channels',  ctypes.c_uint),
+            ('rate'    , ctypes.c_uint),
+            ('height'  , ctypes.c_uint),
+            ('width'   , ctypes.c_uint),
+            ]
+
+        def __str__(self):
+            return "MediaES \n%s" % "\n".join( "%s:\t%s" % (n, getattr(self, n)) for n in self._fields_ )
+
 class PlaylistItem(ctypes.Structure):
     _fields_= [
                 ('id', ctypes.c_int),
@@ -736,6 +776,18 @@ class Instance(object):
         p._instance=self
         return p
 
+    def media_new(self, mrl, *options):
+        """Create an empty Media Player object
+
+        Options can be specified as supplementary string parameters, e.g.
+        m=i.media_new('foo.avi', 'sub-filter=marq{marquee=Hello}', 'vout-filter=invert')
+        """
+        e=VLCException()
+        m=libvlc_media_new(self, mrl, e)
+        for o in options:
+            libvlc_media_add_option(m, o, e)
+        return m
+
 
     if hasattr(dll, 'libvlc_get_vlc_id'):
         def get_vlc_id(self):
@@ -798,15 +850,6 @@ You should start at least one interface first, using libvlc_add_intf().
         """
             e=VLCException()
             return libvlc_log_open(self, e)
-
-    if hasattr(dll, 'libvlc_media_new'):
-        def media_new(self, psz_mrl):
-            """Create a media with the given MRL.
-@param psz_mrl: the MRL to read
-@return: the newly created media
-        """
-            e=VLCException()
-            return libvlc_media_new(self, psz_mrl, e)
 
     if hasattr(dll, 'libvlc_media_new_as_node'):
         def media_new_as_node(self, psz_name):
@@ -1329,6 +1372,19 @@ class Media(object):
         '''(INTERNAL) ctypes parameter conversion method.
         '''
         return arg._as_parameter_
+
+    def add_options(self, *list_of_options):
+        """Add a list of options to the media.
+
+        Options must be written without the double-dash, e.g.:
+        m.add_options('sub-filter=marq@test{marquee=Hello}', 'video-filter=invert')
+
+        Note that you also can directly pass these options in the Instance.media_new method:
+        m=instance.media_new( 'foo.avi', 'sub-filter=marq@test{marquee=Hello}', 'video-filter=invert')
+        """
+        for o in list_of_options:
+            self.add_option(o)
+
 
     if hasattr(dll, 'libvlc_media_add_option'):
         def add_option(self, ppsz_options):

@@ -5,7 +5,6 @@ import time
 from threading import Thread
 from subtitle import readSrt
 from mergeCommands import merge
-from PyQt4 import QtGui
 
 DEBUG = True
 
@@ -44,7 +43,6 @@ for item in commands:
     fTime.append(float(item[2])*1000) # command finish time in ms
 # -------------------------------------------
 
-app = QtGui.QApplication(sys.argv)
 
 
 # -------- Load and start movie ----------------
@@ -59,13 +57,14 @@ else:
     vlc_args = ("-I qt")
     
 instance = vlc.Instance(vlc_args)
-#instance.add_intf("qt")
 media = instance.media_new(path + movieFile)
 player = instance.media_player_new()
 player.set_media(media)
 
 if sys.platform == 'darwin':
+    from PyQt4 import QtGui
     from VLCMacVideo import MacPlayer
+    app = QtGui.QApplication(sys.argv)
     mplayer = MacPlayer(player)
 
 player.play()
@@ -127,10 +126,13 @@ thread1 = editThread()
 thread1.start()
 
 print player.get_time()
-# this is temporary just so player doesn't go on for long time
-#time.sleep((80-player.get_time()/1000))
-app.exec_()
-#time.sleep(55)
+
+if sys.platform == 'darwin':
+    app.exec_()
+else:
+    # this is temporary just so player doesn't go on for long time
+    time.sleep((80-player.get_time()/1000))
+
 stop(player)
 
 

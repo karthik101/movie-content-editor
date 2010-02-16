@@ -2,7 +2,7 @@
 
 #import vlc
 import sys
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui, QtCore, uic
 from Foundation import *
 from AppKit import NSView
 from Quartz import *
@@ -177,94 +177,38 @@ class MacPlayer(QtGui.QWidget):
         super(MacPlayer,self).__init__(parent)
         self.media_player = player
         self.instance = self.media_player.get_instance()
-#        vlc_args = ("-I dummy --verbose=1 --ignore-config --plugin-path=" + d + "/modules --vout=minimal_macosx --opengl-provider=minimal_macosx")
-#        self.instance = vlc.Instance(vlc_args)
-#        self.media_player = self.instance.media_player_new()
-#        self.media_descr = None
         self.videoWidget = None
-        buttonLayout = QtGui.QHBoxLayout()
-        mainLayout = QtGui.QVBoxLayout()
-        videoLayout = QtGui.QHBoxLayout()
         
-        mainLayout.setContentsMargins(0,0,0,0)
-        videoLayout.setContentsMargins(0,0,0,0)
-        buttonLayout.setContentsMargins(0,0,0,0)
-        pauseButton = QtGui.QPushButton('Play/Pause')
-        pauseButton.setCheckable(True)
-        pauseButton.clicked.connect(self.play_pause)
-                
-        stopButton = QtGui.QPushButton('Stop')
-        stopButton.clicked.connect(self.stop)
+        #import the Qt interface defined in VideoMac.ui
+        self.win = uic.loadUi("VideoMac.ui")
         
-        buttonLayout.addWidget(pauseButton)
-        buttonLayout.addWidget(stopButton)
-        
-
-        self.positionSlider = QtGui.QSlider(QtCore.Qt.Horizontal)
-        self.positionSlider.setMaximum(TIME_RES)
-        self.positionSlider.setMinimum(0)
-        self.positionSlider.setToolTip("Video position")
-
-        buttonLayout.addWidget(self.positionSlider)
-
-
-        volumeSlider = QtGui.QSlider(QtCore.Qt.Vertical)
-        volumeSlider.setMaximum(100);
-        volumeSlider.setMinimum(0);
-        volumeSlider.setToolTip("Volume")
-
-
-
-        slidersLayout = QtGui.QBoxLayout(QtGui.QBoxLayout.LeftToRight)
-        slidersLayout.addWidget(volumeSlider)
-        slidersLayout.addWidget(self.positionSlider)
-
-        volumeSlider.setSliderPosition(self.instance.audio_get_volume())
-        volumeSlider.setTracking(True)
-        self.positionSlider.setTracking(True)
+        """the poller is just a simple way to create an event to update the 
+        position slider and do any other interface updates we need"""
         self.poller = QtCore.QTimer(self)
+        
+        #connect all of the buttons and sliders defined in the imported interface
         self.poller.timeout.connect(self.updateInterface)
-        volumeSlider.valueChanged.connect(self.changeVolume)
+        self.positionSlider = self.win.positionSlider
+        self.positionSlider.setMaximum(TIME_RES)
         self.positionSlider.sliderPressed.connect(self.positionChanging)
         self.positionSlider.sliderReleased.connect(self.positionChanged)
+        self.win.pauseButton.clicked.connect(self.play_pause)
+        self.win.stopButton.clicked.connect(self.stop)
         
-        self.isPlaying = False
+        #start the poller and tell it to timeout every .1 s
         self.poller.start(100)
-        self.setLayout(mainLayout)
-#        self.load()
 
+        #create the actual widget that will hold the vlc video
         videoWidget = MacVideo()
         videoWidget.createVideoWindow(self.media_player)
-        videoLayout.addWidget(volumeSlider)
-        videoLayout.addWidget(videoWidget)
-        mainLayout.addLayout(videoLayout)
-        mainLayout.addLayout(buttonLayout)
-        self.resize(640,480)
-        self.show()
-        
-
-    
-            
-               
-#    def load(self):
-#        if self.media_descr:
-#            vlc.media_release(self.media_descr)
-#        self.media_descr = self.instance.media_new("/Users/slloyd/movieEditor/XCode/movieEditor/Wildlife.wmv")
-#        self.media_descr = self.instance.media_new("/Users/slloyd/movieEditor/The_Sign_Of_Four.m4v")
-#        self.media_player.set_media(self.media_descr)
-        
-        
-
+        self.win.videoLayout.setContentsMargins(0,0,0,0)
+        self.win.videoLayout.addWidget(videoWidget)
+        self.win.show()        
         
         
     def play(self):
         self.media_player.play()
         self.show()
-#        if self.videoWidget:
-#            self.show()
-#            self.videoWidget.show()
-#        self.show()
-        self.isPlaying = True
 
 
 # right now if you try to stop the player on a mac, it crashes the program
@@ -299,7 +243,6 @@ class MacPlayer(QtGui.QWidget):
         if self.media_player.get_media() is None:
             return
         newPosition = self.positionSlider.sliderPosition()
-#        NSLog(str(newPosition))
         self.media_player.set_position(float(newPosition)/float(TIME_RES))
         
         
@@ -309,7 +252,6 @@ class MacPlayer(QtGui.QWidget):
             return
         if self.media_player.get_media() is None:
             return
-#        NSLog(u'Updating interface')
         a = self.media_player.get_position()
         self.positionSlider.setValue(self.media_player.get_position()*TIME_RES)
         

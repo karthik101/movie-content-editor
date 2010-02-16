@@ -23,6 +23,7 @@ path = ''
 badwordsFile = "badwords.txt"
 movieFile = "Kung Fu Panda.m4v"
 subtitleFile = "panda.srt"
+blankFile = "blank.srt"
 customFile = "panda_custom.txt"
 
 # ------  create edited subtitle file ------
@@ -74,7 +75,7 @@ player.play()
 player.set_time(33000)
 
 # turn on subtitles
-player.video_set_subtitle_file(path + subtitleEdit)
+#player.video_set_subtitle_file(path + subtitleEdit)
 
 
 # ------------- subclass off of Thread ---------------
@@ -105,10 +106,13 @@ class editThread (Thread):
 
 # ------- methods -------------------------
 def onMute ():
+    player.video_set_subtitle_file(path + subtitleEdit)
     instance.audio_set_mute(1)
     return
     
 def offMute ():
+    player.video_set_subtitle_file(path + blankFile)
+#    player.video_set_spu("Testing SPU")
     instance.audio_set_mute(0)
     return
 

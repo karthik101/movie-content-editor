@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenSubtitles.org\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-08 23:04+0100\n"
+"PO-Revision-Date: 2008-12-09 10:25+0000\n"
+"Last-Translator: Keruskerfuerst <Unknown>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2008-12-25 22:28+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: /home/capiscuas/workspace/subdownloader/FileManagement/FileScan.py:106
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/FileManagement/FileScan.py:106
+#, python-format
+msgid "Parsing video: %s"
+msgstr "Analysiere Video: %s"
+
+#: /home/capiscuas/workspace/subdownloader/FileManagement/FileScan.py:119
+#: /home/capiscuas/workspace/subdownloader/FileManagement/FileScan.py:150
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/FileManagement/FileScan.py:119
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/FileManagement/FileScan.py:150
+#, python-format
+msgid "Parsing sub: %s"
+msgstr "Analysiere Untertitel: %s"
+
+#: /home/capiscuas/workspace/subdownloader/FileManagement/FileScan.py:120
+#: /home/capiscuas/workspace/subdownloader/FileManagement/FileScan.py:151
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/FileManagement/FileScan.py:120
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/FileManagement/FileScan.py:151
+msgid "Finished hashing"
+msgstr "Hashen beendet"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:28
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:28
+msgid "Albanian"
+msgstr "Albanisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:29
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:29
+msgid "Arabic"
+msgstr "Arabisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:30
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:30
+msgid "Armenian"
+msgstr "Armenisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:31
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:31
+msgid "Malay"
+msgstr "Malaiisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:32
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:32
+msgid "Bosnian"
+msgstr "Bosnisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:33
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:33
+msgid "Brazilian"
+msgstr "Brasilianisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:34
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:34
+msgid "Bulgarian"
+msgstr "Bulgarisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:35
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:35
+msgid "Catalan"
+msgstr "Katalanisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:36
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:36
+msgid "Basque"
+msgstr "Baskisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:37
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:37
+msgid "Chinese"
+msgstr "Chinesisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:38
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:38
+msgid "Croatian"
+msgstr "Kroatisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:39
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:39
+msgid "Czech"
+msgstr "Tschechisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:40
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:40
+msgid "Danish"
+msgstr "Dänisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:41
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:41
+msgid "Dutch"
+msgstr "Niederländisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:42
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:42
+msgid "English"
+msgstr "Englisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:43
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:43
+msgid "British English"
+msgstr "britisches Englisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:44
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:44
+msgid "Esperanto"
+msgstr "Esperanto"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:45
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:45
+msgid "Estonian"
+msgstr "Estnisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:46
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:46
+msgid "Finnish"
+msgstr "Finnisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:47
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:47
+msgid "French"
+msgstr "Französisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:48
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:48
+msgid "Georgian"
+msgstr "Georgisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:49
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:49
+msgid "German"
+msgstr "Deutsch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:50
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:50
+msgid "Greek"
+msgstr "Griechisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:51
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:51
+msgid "Hebrew"
+msgstr "Hebräisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:52
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:52
+msgid "Hungarian"
+msgstr "Ungarisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:53
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:53
+msgid "Indonesian"
+msgstr "Indonesisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:54
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:54
+msgid "Italian"
+msgstr "Italienisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:55
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:55
+msgid "Japanese"
+msgstr "Japanisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:56
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:56
+msgid "Kazakh"
+msgstr "Kasachisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:57
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:57
+msgid "Korean"
+msgstr "Koreanisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:58
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:58
+msgid "Latvian"
+msgstr "Lettisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:59
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:59
+msgid "Lithuanian"
+msgstr "Litauisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:60
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:60
+msgid "Luxembourgish"
+msgstr "Luxemburgisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:61
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:61
+msgid "Macedonian"
+msgstr "Mazedonisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:62
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:62
+msgid "Norwegian"
+msgstr "Norwegisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:63
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:63
+msgid "Persian"
+msgstr "Persisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:64
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:64
+msgid "Polish"
+msgstr "Polnisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Languages.py:65
+#: /home/capiscuas/workspace/subdownloader/debian/subdownloader-cli/usr/share/subdownloader/languages/Languages.py:65
+msgid "Portuguese"
+msgstr "Portugiesisch"
+
+#: /home/capiscuas/workspace/subdownloader/languages/Langua

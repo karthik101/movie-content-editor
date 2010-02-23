@@ -16,8 +16,8 @@ def sendDebug(msg, newline=1):
         print msg
 
 # For now I need to define the path, I commented out so it should work for you guys
-#path = 'C:\Users\Kimberly\Desktop\Andrew\Movie Editor\\'
-path = ''
+path = 'C:\Users\cuff\Documents\moonlight\movie-content-editor\movie_editor\\'
+#path = ''
 
 
 badwordsFile = "badwords.txt"
@@ -54,10 +54,13 @@ currently implemented for Linux"""
 if sys.platform == 'darwin':
     d='/Applications/VLC.app/Contents/MacOS'
     vlc_args = ("-I dummy --verbose=1 --ignore-config --plugin-path=" + d + "/modules --vout=minimal_macosx --opengl-provider=minimal_macosx")
+    instance = vlc.Instance(vlc_args)
 else:
-    vlc_args = ("-I qt")
+    instance = vlc.Instance()
+    instance.add_intf("qt")
+
+
     
-instance = vlc.Instance(vlc_args)
 media = instance.media_new(path + movieFile)
 player = instance.media_player_new()
 player.set_media(media)
@@ -135,7 +138,8 @@ if sys.platform == 'darwin':
     app.exec_()
 else:
     # this is temporary just so player doesn't go on for long time
-    time.sleep((80-player.get_time()/1000))
+    #time.sleep((80-player.get_time()/1000))
+    instance.wait()
 
 stop(player)
 

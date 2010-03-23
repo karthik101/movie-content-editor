@@ -87,8 +87,12 @@ def FindSubtitles(videoname,lang):
 				
 def GetSubtitles(moviepath	):
 	#print server.LogIn("","","","SubIt")['status']
-	token=server.LogIn("","","","SubIt")['token']
-	
+	try:
+		token=server.LogIn("","","","SubIt")['token']
+	except:
+		print "opensubtitles.org server is not online at the moment.  please try again later."
+		exit(1);
+		
 	moviebytesize = os.path.getsize(moviepath) 
 	hash=Compute(moviepath)
 	movieInfo = {'sublanguageid' : 'eng','moviehash' : hash, 'moviebytesize' : moviebytesize}
@@ -104,6 +108,8 @@ def GetSubtitles(moviepath	):
 		movieInfo = {'sublanguageid' : 'eng','query' : name}
 		movies=[movieInfo]
 		data=server.SearchSubtitles(token,movies)['data']
+		
+	server.LogOut()
 	
 	return data
 	
@@ -116,17 +122,17 @@ def Compute(name):
 		f = file(name, "rb") 
 		filesize = os.path.getsize(name) 
 		hash = filesize 
-	                    
+		
 		if filesize < 65536 * 2: 
 			return "SizeError" 
-	                 
+
 		for x in range(65536/bytesize): 
 			buffer = f.read(bytesize) 
 			(l_value,)= struct.unpack(longlongformat, buffer)  
 			hash += l_value 
 			hash = hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number  
 
-	    
+
 		f.seek(max(0,filesize-65536),0) 
 		for x in range(65536/bytesize): 
 			buffer = f.read(bytesize) 
